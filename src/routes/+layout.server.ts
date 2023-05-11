@@ -1,5 +1,7 @@
-export const load = async ({ locals }) => {
-  return {
-    lang: locals.lang,
-  };
-};
+import type { LayoutServerLoad } from './$types'
+
+export const load: LayoutServerLoad = ({ locals: { locale, LL } }) => {
+
+	// pass locale information from "server-context" to "shared server + client context"
+	return { locale }
+}
