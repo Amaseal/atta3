@@ -15,17 +15,133 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * H​i​ ​{​n​a​m​e​}​!​ ​P​l​e​a​s​e​ ​l​e​a​v​e​ ​a​ ​s​t​a​r​ ​i​f​ ​y​o​u​ ​l​i​k​e​ ​t​h​i​s​ ​p​r​o​j​e​c​t​:​ ​h​t​t​p​s​:​/​/​g​i​t​h​u​b​.​c​o​m​/​i​v​a​n​h​o​f​e​r​/​t​y​p​e​s​a​f​e​-​i​1​8​n
-	 * @param {string} name
+	 * /​e​n​{​0​}
+	 * @param {unknown} 0
 	 */
-	HI: RequiredParams<'name'>
+	link: RequiredParams<'0'>
+	nav: {
+		/**
+		 * S​e​r​v​i​c​e​s
+		 */
+		categories: string
+		/**
+		 * G​a​l​l​e​r​y
+		 */
+		gallery: string
+		/**
+		 * A​b​o​u​t
+		 */
+		about: string
+		/**
+		 * S​e​a​r​c​h​.​.​.
+		 */
+		search: string
+	}
+	buttons: {
+		/**
+		 * P​r​o​d​u​c​t​s
+		 */
+		hero: string
+		/**
+		 * M​o​r​e
+		 */
+		categories: string
+		/**
+		 * V​i​e​w
+		 */
+		promo: string
+		/**
+		 * S​e​n​d
+		 */
+		send: string
+	}
+	form: {
+		/**
+		 * S​e​n​d​ ​u​s​ ​a​ ​m​e​s​s​e​g​e​:
+		 */
+		message: string
+		/**
+		 * N​a​m​e
+		 */
+		name: string
+		/**
+		 * S​u​r​n​a​m​e
+		 */
+		surname: string
+		/**
+		 * E​-​m​a​i​l
+		 */
+		email: string
+		/**
+		 * T​e​x​t
+		 */
+		text: string
+	}
 }
 
 export type TranslationFunctions = {
 	/**
-	 * Hi {name}! Please leave a star if you like this project: https://github.com/ivanhofer/typesafe-i18n
+	 * /en{0}
 	 */
-	HI: (arg: { name: string }) => LocalizedString
+	link: (arg0: unknown) => LocalizedString
+	nav: {
+		/**
+		 * Services
+		 */
+		categories: () => LocalizedString
+		/**
+		 * Gallery
+		 */
+		gallery: () => LocalizedString
+		/**
+		 * About
+		 */
+		about: () => LocalizedString
+		/**
+		 * Search...
+		 */
+		search: () => LocalizedString
+	}
+	buttons: {
+		/**
+		 * Products
+		 */
+		hero: () => LocalizedString
+		/**
+		 * More
+		 */
+		categories: () => LocalizedString
+		/**
+		 * View
+		 */
+		promo: () => LocalizedString
+		/**
+		 * Send
+		 */
+		send: () => LocalizedString
+	}
+	form: {
+		/**
+		 * Send us a messege:
+		 */
+		message: () => LocalizedString
+		/**
+		 * Name
+		 */
+		name: () => LocalizedString
+		/**
+		 * Surname
+		 */
+		surname: () => LocalizedString
+		/**
+		 * E-mail
+		 */
+		email: () => LocalizedString
+		/**
+		 * Text
+		 */
+		text: () => LocalizedString
+	}
 }
 
 export type Formatters = {}

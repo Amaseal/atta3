@@ -14,7 +14,8 @@
       "$lib/*": ["./src/lib/*"],
       "$i18n": ["./src/i18n"],
       "$i18n/*": ["./src/i18n/*"]
-    }
+    },
+    "types": ["unplugin-icons/types/vue"]
   }
   // Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
   //

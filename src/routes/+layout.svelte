@@ -1,8 +1,12 @@
 <script lang="ts">
-	import '../app.postcss';
+	import Footer from '$lib/components/Footer.svelte';
 	import Nav from '$lib/components/Nav.svelte';
+	import '../styles.css';
+	export let data;
 </script>
 
-<Nav />
+<Nav categories={data.categories} />
 
 <slot />
+
+<Footer homePage={data.homePage} categories={data.categories} />

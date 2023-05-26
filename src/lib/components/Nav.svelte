@@ -1,57 +1,113 @@
-<script>
+<script lang="ts">
+	import { locale } from '$i18n/i18n-svelte';
+	import type { Category } from '../../types/types';
+	import LL from '$i18n/i18n-svelte';
+	import LocaleSwitcher from './LocaleSwitcher.svelte';
+	import { clickOutside } from 'svelte-use-click-outside';
+
+	import MdiFacebook from '~icons/mdi/facebook';
+	import MdiInstagram from '~icons/mdi/instagram';
+	import SearchButton from './SearchButton.svelte';
+
+	export let categories: Category[];
+
+	let categoryDropdown = false;
+	let languageDropdown = false;
+	let height: number;
 </script>
 
-<div class="container">
-	<div class="navbar bg-base-100">
-		<div class="flex-1">
-			<a href="/">
+<svelte:window bind:scrollY={height} />
+
+<section class:scrolled={height > 90}>
+	<div class="container">
+		<nav class:scrolled={height > 90}>
+			<a class="logo" href={$LL.link('/')}>
 				<picture>
-					<source
-						class="h-20"
-						srcset="./images/logo_light.svg"
-						media="(prefers-color-scheme: dark)"
-					/>
-					<img class="h-20" src="./images/logo_dark.svg" alt="Atta print logo" />
+					<source srcset="../images/logo_light.svg" media="(prefers-color-scheme: dark)" />
+					<img class:scrolled={height > 90} src="./images/logo_dark.svg" alt="Atta print logo" />
 				</picture>
 			</a>
-		</div>
-		<div class="flex-none">
-			<ul class="menu menu-horizontal px-1">
-				<button class="btn btn-ghost btn-circle">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="h-5 w-5"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-						><path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-						/></svg
+			<ul class="flex gap align margin">
+				<SearchButton />
+
+				<li class="dropdown">
+					<button
+						use:clickOutside={() => (categoryDropdown = false)}
+						on:click={() => (categoryDropdown = !categoryDropdown)}
+						class="navlink"
 					>
-				</button>
-				<li><a>Item 1</a></li>
-				<li tabindex="0">
-					<a>
-						Parent
-						<svg
-							class="fill-current"
-							xmlns="http://www.w3.org/2000/svg"
-							width="20"
-							height="20"
-							viewBox="0 0 24 24"
-							><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg
-						>
-					</a>
-					<ul class="p-2 bg-base-100">
-						<li><a>Submenu 1</a></li>
-						<li><a>Submenu 2</a></li>
-					</ul>
+						{$LL.nav.categories()}
+					</button>
+
+					{#if categoryDropdown}
+						<ul class="dropdown_content">
+							{#each categories as category}
+								<li>
+									<a class="navlink" href={$LL.link(`/${category.slug}`)}>{category.title}</a>
+								</li>
+							{/each}
+						</ul>
+					{/if}
 				</li>
-				<li><a>Item 3</a></li>
+
+				<li><a class="navlink" href={$LL.link('/galerija')}>{$LL.nav.gallery()}</a></li>
+				<li><a class="navlink" href={$LL.link('/par-mums')}>{$LL.nav.about()}</a></li>
 			</ul>
-		</div>
+			<ul class="flex">
+				<li>
+					<a class="round_button" href="https://www.facebook.com/attaprint1"><MdiFacebook /></a>
+				</li>
+				<li>
+					<a class="round_button" href="https://www.facebook.com/attaprint1"><MdiInstagram /></a>
+				</li>
+			</ul>
+
+			<ul>
+				<li class="dropdown">
+					<button
+						use:clickOutside={() => (languageDropdown = false)}
+						on:click={() => (languageDropdown = !languageDropdown)}
+						class="navlink"
+					>
+						{$locale}
+					</button>
+					{#if languageDropdown}
+						<ul class="dropdown_content">
+							<LocaleSwitcher />
+						</ul>
+					{/if}
+				</li>
+			</ul>
+		</nav>
 	</div>
-</div>
+</section>
+
+<style>
+	img {
+		transition: all 0.2s ease-in-out;
+		transform-origin: center left;
+	}
+	img.scrolled {
+		transform: scale(0.7);
+	}
+	section {
+		position: fixed;
+		top: 0;
+		width: 100%;
+		z-index: 99999;
+		transition: all 0.2s ease-in-out;
+	}
+	section.scrolled {
+		background-color: var(--primary);
+	}
+	.margin {
+		margin-left: auto;
+	}
+	nav {
+		padding: var(--size-m) 0;
+		transition: all 0.2s ease-in-out;
+	}
+	nav.scrolled {
+		padding: var(--size-xs) 0;
+	}
+</style>
