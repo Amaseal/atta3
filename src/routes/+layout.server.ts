@@ -1,23 +1,28 @@
 import type { Category, HomePage } from "../types/types";
 import type { LayoutServerLoad } from "./$types";
 
-export const load: LayoutServerLoad = async ({
-  locals: { locale, LL },
-  params,
-}) => {
-  const homepageData = await fetch(
-    `http://127.0.0.1:1337/api/homepage?locale=${params.lang}&populate=deep,4`
-  );
+import { STRAPI } from "$env/static/private";
 
-  const categoryData = await fetch(
-    `http://127.0.0.1:1337/api/categories?locale=${params.lang}&populate=deep`
-  );
-  const categories = await categoryData.json();
-  const homePage = await homepageData.json();
+export const load: LayoutServerLoad = async ({ locals: { locale } }) => {
+  const homePage = async () => {
+    const data = await fetch(
+      `${STRAPI}/api/homepage?locale=${locale}&populate=deep,4`
+    );
+    const homePage = await data.json();
+    return homePage.data as HomePage;
+  };
+
+  const categories = async () => {
+    const data = await fetch(
+      `${STRAPI}/api/categories?locale=${locale}&populate=deep`
+    );
+    const categories = await data.json();
+    return categories.data as Category[];
+  };
 
   return {
     locale,
-    categories: categories.data as Category[],
-    homePage: homePage.data as HomePage,
+    categories: categories(),
+    homePage: homePage(),
   };
 };

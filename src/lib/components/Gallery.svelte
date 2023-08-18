@@ -1,94 +1,74 @@
 <script lang="ts">
 	import type { Gallery, HomePage } from '../../types/types';
-	import MdiChevronLeft from '~icons/mdi/chevron-left';
-	import MdiChevronRight from '~icons/mdi/chevron-right';
-	import type { Image } from '../../types/types';
+	import LL from '$i18n/i18n-svelte';
+	let height: number;
+	let scrolled: number;
 
 	export let gallery: Gallery;
 	export let homePage: HomePage;
-
-	import { crossfade } from 'svelte/transition';
-	import { flip } from 'svelte/animate';
-
-	let index = 0;
-
-	const [send] = crossfade({
-		duration: 0,
-		delay: 100
-	});
-
-	const [receive] = crossfade({
-		duration: 100,
-		delay: 10
-	});
-
-	let next = () => {
-		let image: Image = gallery.images.shift()!;
-		gallery.images = [...gallery.images, image];
-		index = (index + 1) % gallery.images.length;
-		if (index > gallery.images.length) {
-			index = 1;
-		}
-	};
-
-	let back = () => {
-		let image: Image = gallery.images.pop()!;
-		gallery.images = [image, ...gallery.images];
-		if (index < 1) {
-			index = gallery.images.length;
-		}
-		index = (index - 1) % gallery.images.length;
-	};
 </script>
+
+<svelte:window bind:scrollY={scrolled} bind:innerHeight={height} />
 
 <section>
 	<div class="container">
 		<h2>{homePage.gallery_title}</h2>
 		<div class="image_container">
-			<div class="flex gap images">
-				{#each gallery.images as item (item.id)}
-					<div
-						animate:flip={{ duration: 100 }}
-						in:receive={{ key: item.id }}
-						out:send={{ key: item.id }}
-					>
-						<img src={item.formats.medium?.url || item.url} alt="" />
-					</div>
-				{/each}
+			<div class="gap images">
+				<div class="row one flex gap" style="right: {-(scrolled - 1800) / 4}px">
+					{#each gallery.images.slice(0, 6) as item (item.id)}
+						<img src={item.formats.small?.url || item.url} alt="" />
+					{/each}
+				</div>
+
+				<div class="row two flex gap" style="left: {-(scrolled - 1800) / 4}px">
+					{#each gallery.images.slice(7, 14) as item (item.id)}
+						<img src={item.formats.small?.url || item.url} alt="" />
+					{/each}
+				</div>
 			</div>
 		</div>
-
-		<div class="flex justify">
-			<div class="controls flex align">
-				<button on:click={() => back()} class="flex"><MdiChevronLeft /></button>
-				{#key gallery.images}
-					{#each gallery.images as item, i}
-						<button class:active={index === i} class="control" />
-					{/each}
-				{/key}
-
-				<button on:click={() => next()} class="flex"><MdiChevronRight /></button>
-			</div>
+		<div class="flex gap align">
+			<p>{$LL.gallery.more()}</p>
+			<a aria-label={$LL.seo.gallery.more()} href={$LL.link('/galerija')} class="button"
+				>{$LL.buttons.categories()}</a
+			>
 		</div>
 	</div>
 </section>
 
 <style>
+	section {
+		overflow: hidden;
+	}
+	.container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.one {
+		top: 0;
+		right: 0;
+	}
+	.two {
+		bottom: 0;
+		left: 0;
+	}
+	.row {
+		position: absolute;
+		height: 300px;
+		margin-bottom: var(--size-xs);
+	}
 	.image_container {
+		width: 100%;
+		height: 624px;
 		position: relative;
-		height: 350px;
+		margin-bottom: var(--size-l);
 	}
 	.images {
 		overflow-x: hidden;
-		position: absolute;
 		right: 0;
 		flex-direction: row-reverse;
-	}
-	.control.active {
-		background-color: var(--text);
-	}
-	.controls {
-		margin-top: var(--size-m);
 	}
 	.container {
 		position: relative;
@@ -98,23 +78,31 @@
 	}
 
 	img {
-		height: 350px;
+		width: 400px;
+		object-fit: cover;
+		height: 300px;
+		filter: grayscale(1) contrast(120%);
 		border-radius: var(--size-s);
 		background-color: var(--secondary);
 	}
 	h2 {
-		font-size: 72px;
-		font-size: clamp(32px, 5vw, 72px);
-		line-height: 1.2;
 		text-align: center;
-		margin-bottom: var(--size-m);
+		margin-bottom: var(--size-l);
 	}
-	.control {
-		background-color: var(--primary);
-		border-radius: 50%;
-		height: 15px;
-		width: 15px;
-		border: 1px solid var(--text);
-		margin: var(--size-xs);
+
+	@media only screen and (max-width: 800px) {
+		.image_container {
+			height: 324px;
+		}
+		img {
+			height: 150px;
+			width: 200px;
+		}
+		.row {
+			height: 150px;
+		}
+		section {
+			padding: var(--size-l) 0 var(--size-m) 0;
+		}
 	}
 </style>

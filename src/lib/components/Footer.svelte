@@ -13,17 +13,14 @@
 	<div class="container">
 		<div class="flex gap large">
 			<a class="logo" href="/">
-				<picture>
-					<source srcset="./images/logo_light.svg" media="(prefers-color-scheme: dark)" />
-					<img src="./images/logo_dark.svg" alt="Atta print logo" />
-				</picture>
+				<img src="/images/logo_light.svg" alt="Atta print logo" />
 			</a>
-			<div class="flex links gap large">
+			<div class="flex links gap">
 				{#each categories as category}
 					<div class="flex collumn">
-						<h4 class="main">{category.title}</h4>
+						<a href={$LL.link(`/${category.slug}`)} class="main">{category.title}</a>
 						{#each category.services as service}
-							<a href={$LL.link('/')}>{service.title}</a>
+							<a href={$LL.link(`/${category.slug}/${service.slug}`)}>{service.title}</a>
 						{/each}
 					</div>
 				{/each}
@@ -31,20 +28,32 @@
 				<a class="main" href={$LL.link('/par-mums')}>{$LL.nav.about()}</a>
 				<ul class="flex icons">
 					<li>
-						<a class="round_button" href="https://www.facebook.com/attaprint1"><MdiFacebook /></a>
+						<a
+							aria-label={$LL.seo.header.facebook()}
+							class="round_button"
+							href="https://www.facebook.com/attaprint1"><MdiFacebook /></a
+						>
 					</li>
 					<li>
-						<a class="round_button" href="https://www.instagram.com/atta.print1/"
-							><MdiInstagram /></a
+						<a
+							aria-label={$LL.seo.header.instagram()}
+							class="round_button"
+							href="https://www.instagram.com/atta.print1/"><MdiInstagram /></a
 						>
 					</li>
 				</ul>
 			</div>
 		</div>
+		<span>Attaprint &copy {new Date().getFullYear()}</span>
 	</div>
 </footer>
 
 <style>
+	a {
+		max-width: 16ch;
+		font-weight: 100;
+		margin-bottom: var(--size-s);
+	}
 	.links {
 		width: 100%;
 	}
@@ -57,6 +66,20 @@
 	}
 	footer {
 		background-color: black;
-		padding: calc(var(--size-xl) + var(--size-l)) 0;
+		padding: calc(var(--size-xl) + var(--size-l)) 0 var(--size-l) 0;
+	}
+	footer * {
+		color: white;
+	}
+	@media only screen and (max-width: 950px) {
+		.flex {
+			flex-wrap: wrap;
+		}
+		footer {
+			padding: var(--size-xl) 0 var(--size-m) 0;
+		}
+		.icons {
+			margin-left: 0;
+		}
 	}
 </style>

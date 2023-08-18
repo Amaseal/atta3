@@ -39,6 +39,7 @@ export type Product = {
   image: Image;
   service: Service;
   prices: Price[];
+  colors: Color[];
 };
 
 export type Price = {
@@ -93,6 +94,7 @@ export type HomePage = {
   id: number;
   title: string;
   span: string;
+  image: Image;
   contact_title: string;
   description: string;
   gallery_title: string;
@@ -129,10 +131,18 @@ export type Promos = {
   locale: string;
   text: string;
   image: Image;
-  product: Product;
+  service: Service;
 };
 
 export type Seo = {
   metaTitle: string;
   metaDescription: string;
+};
+
+export type Color = {
+  id: number;
+  name: string;
+  color: string;
+  updatedAt: string;
+  publishedAt: string;
 };

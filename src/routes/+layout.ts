@@ -7,15 +7,9 @@ import { get } from "svelte/store";
 export const load: LayoutLoad<{ locale: Locales }> = async ({
   data: { locale, homePage, categories },
 }) => {
-  // load dictionary into memory
   await loadLocaleAsync(locale);
-
-  // if you need to output a localized string in a `load` function,
-  // you always need to call `setLocale` right before you access the `LL` store
   setLocale(locale);
-  // get the translation functions value from the store
   const $LL = get(LL);
 
-  // pass locale to the "rendering context"
   return { locale, homePage, categories };
 };

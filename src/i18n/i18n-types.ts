@@ -25,11 +25,11 @@ type RootTranslation = {
 		 */
 		categories: string
 		/**
-		 * G​a​l​l​e​r​y
+		 * O​u​r​ ​w​o​r​k
 		 */
 		gallery: string
 		/**
-		 * A​b​o​u​t
+		 * C​o​n​t​a​c​t​s
 		 */
 		about: string
 		/**
@@ -43,7 +43,7 @@ type RootTranslation = {
 		 */
 		hero: string
 		/**
-		 * M​o​r​e
+		 * E​x​p​l​o​r​e
 		 */
 		categories: string
 		/**
@@ -76,6 +76,90 @@ type RootTranslation = {
 		 * T​e​x​t
 		 */
 		text: string
+		/**
+		 * T​h​a​n​k​ ​y​o​u​!​ ​W​e​ ​h​a​v​e​ ​r​e​c​i​e​v​e​d​ ​y​o​u​r​ ​m​e​s​s​a​g​e​!
+		 */
+		success: string
+	}
+	slider: {
+		/**
+		 * P​r​i​c​e​:
+		 */
+		price: string
+		/**
+		 * Q​u​a​n​t​i​t​y​:
+		 */
+		quantity: string
+		/**
+		 * A​v​a​i​l​a​b​l​e​ ​C​o​l​o​r​s​:
+		 */
+		colors: string
+		/**
+		 * F​o​r​ ​o​t​h​e​r​ ​q​u​a​n​t​i​t​i​e​s​ ​p​l​e​a​s​e​ ​c​o​n​t​a​c​t​ ​u​s​!
+		 */
+		price_text: string
+	}
+	search: {
+		/**
+		 * N​o​ ​p​r​o​d​u​c​t​s​ ​f​o​u​n​d​,​ ​p​l​e​a​s​e​ ​t​r​y​ ​a​g​a​i​n​!
+		 */
+		notFound: string
+	}
+	gallery: {
+		/**
+		 * F​i​n​d​ ​m​o​r​e​:
+		 */
+		more: string
+	}
+	seo: {
+		header: {
+			/**
+			 * F​a​c​e​b​o​o​k
+			 */
+			facebook: string
+			/**
+			 * I​n​s​t​a​g​r​a​m
+			 */
+			instagram: string
+		}
+		search: {
+			/**
+			 * S​e​a​r​c​h
+			 */
+			inputLabel: string
+			/**
+			 * S​e​a​r​c​h
+			 */
+			placeholder: string
+			/**
+			 * O​p​e​n​ ​S​e​a​r​c​h​ ​i​n​p​u​t
+			 */
+			openSearch: string
+			/**
+			 * S​e​a​r​c​h
+			 */
+			searchButton: string
+		}
+		slider: {
+			/**
+			 * N​e​x​t
+			 */
+			next: string
+			/**
+			 * P​r​e​v​i​o​u​s
+			 */
+			previous: string
+			/**
+			 * G​o​ ​t​o​ ​s​l​i​d​e
+			 */
+			goTo: string
+		}
+		gallery: {
+			/**
+			 * S​e​e​ ​m​o​r​e​ ​o​f​ ​o​u​r​ ​w​o​r​k
+			 */
+			more: string
+		}
 	}
 }
 
@@ -90,11 +174,11 @@ export type TranslationFunctions = {
 		 */
 		categories: () => LocalizedString
 		/**
-		 * Gallery
+		 * Our work
 		 */
 		gallery: () => LocalizedString
 		/**
-		 * About
+		 * Contacts
 		 */
 		about: () => LocalizedString
 		/**
@@ -108,7 +192,7 @@ export type TranslationFunctions = {
 		 */
 		hero: () => LocalizedString
 		/**
-		 * More
+		 * Explore
 		 */
 		categories: () => LocalizedString
 		/**
@@ -141,6 +225,90 @@ export type TranslationFunctions = {
 		 * Text
 		 */
 		text: () => LocalizedString
+		/**
+		 * Thank you! We have recieved your message!
+		 */
+		success: () => LocalizedString
+	}
+	slider: {
+		/**
+		 * Price:
+		 */
+		price: () => LocalizedString
+		/**
+		 * Quantity:
+		 */
+		quantity: () => LocalizedString
+		/**
+		 * Available Colors:
+		 */
+		colors: () => LocalizedString
+		/**
+		 * For other quantities please contact us!
+		 */
+		price_text: () => LocalizedString
+	}
+	search: {
+		/**
+		 * No products found, please try again!
+		 */
+		notFound: () => LocalizedString
+	}
+	gallery: {
+		/**
+		 * Find more:
+		 */
+		more: () => LocalizedString
+	}
+	seo: {
+		header: {
+			/**
+			 * Facebook
+			 */
+			facebook: () => LocalizedString
+			/**
+			 * Instagram
+			 */
+			instagram: () => LocalizedString
+		}
+		search: {
+			/**
+			 * Search
+			 */
+			inputLabel: () => LocalizedString
+			/**
+			 * Search
+			 */
+			placeholder: () => LocalizedString
+			/**
+			 * Open Search input
+			 */
+			openSearch: () => LocalizedString
+			/**
+			 * Search
+			 */
+			searchButton: () => LocalizedString
+		}
+		slider: {
+			/**
+			 * Next
+			 */
+			next: () => LocalizedString
+			/**
+			 * Previous
+			 */
+			previous: () => LocalizedString
+			/**
+			 * Go to slide
+			 */
+			goTo: () => LocalizedString
+		}
+		gallery: {
+			/**
+			 * See more of our work
+			 */
+			more: () => LocalizedString
+		}
 	}
 }
 

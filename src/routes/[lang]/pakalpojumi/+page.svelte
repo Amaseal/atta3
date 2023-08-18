@@ -1,14 +1,13 @@
 <script lang="ts">
-	import type { Category } from '../../types/types';
 	import LL from '$i18n/i18n-svelte';
-
-	export let categories: Category[];
+	export let data;
 </script>
 
 <section>
 	<div class="container">
-		{#each categories.slice(0, 2) as category}
+		{#each data.categories as category}
 			<div class="flex gap align category">
+				<img src={category.image.formats.large?.url} alt="" />
 				<div class="text">
 					<h2>{category.title}</h2>
 					<p>{category.description}</p>
@@ -16,29 +15,31 @@
 						>{$LL.buttons.categories()}</a
 					>
 				</div>
-				<img src={category.image.formats.large?.url} alt="" />
 			</div>
 		{/each}
 	</div>
 </section>
 
 <style>
-	.category:nth-of-type(1) > img {
-		order: 1;
+	section {
+		padding-bottom: var(--size-l);
+		padding-top: calc(var(--size-xl) + var(--size-l));
+		background-color: var(--secondary);
 	}
-	.category:nth-of-type(1) {
-		margin-bottom: var(--size-l);
-	}
-	.category:nth-of-type(1) > .text {
-		order: 2;
+	.category {
+		margin-bottom: var(--size-m);
 	}
 
-	.category:nth-of-type(2) > .text {
+	.category:nth-of-type(2n) > .text {
+		order: 1;
 		display: flex;
 		flex-direction: column;
 		align-items: end;
 	}
-	.category:nth-of-type(2) > .text > * {
+	.category:nth-of-type(2n) > img {
+		order: 2;
+	}
+	.category:nth-of-type(2n) > .text > * {
 		text-align: end;
 	}
 	.text {
@@ -47,13 +48,11 @@
 	}
 	img {
 		width: 50%;
+		height: 500px;
+		object-fit: cover;
 		border-radius: var(--size-s);
 	}
 
-	section {
-		background-color: var(--secondary);
-		padding: calc(var(--size-l) + var(--size-m)) 0;
-	}
 	p {
 		margin-bottom: var(--size-m);
 	}
@@ -68,18 +67,31 @@
 			width: 100%;
 			padding: var(--size-s) 0;
 		}
-		.category:nth-of-type(2) > .text {
-			align-items: start;
+		.category:nth-of-type(1) > img {
+			order: 1;
+		}
+
+		.category:nth-of-type(1) > .text {
 			order: 2;
+		}
+		.category > img {
+			order: 1;
+		}
+
+		.category > .text {
+			order: 2;
+		}
+
+		.category:nth-of-type(2) > .text {
+			display: flex;
+			flex-direction: column;
+			align-items: start;
 		}
 		.category:nth-of-type(2) > .text > * {
 			text-align: start;
 		}
-		.category:nth-of-type(2) > img {
-			order: 1;
-		}
 		section {
-			padding: var(--size-l) 0;
+			padding: var(--size-xl) 0 var(--size-l) 0;
 		}
 	}
 </style>

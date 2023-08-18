@@ -31,38 +31,46 @@
 		<div class="grid align">
 			<div class="text flex align">
 				<div class="flex collumn start">
-					<h1><span>{homePage.span}</span><br />{homePage.title}</h1>
+					<h1>{@html homePage.title}</h1>
 					<p>{homePage.description}</p>
-
-					{#if promos.length > 0}
-						<div class="promo_info flex align gap">
-							<a class="button" href="/">{$LL.buttons.hero()}</a>
-							<a href="{promos[index].product.slug}/{$locale}}" class="button"
-								>{promos[index].button}</a
-							>
-							<h2>{promos[index].text}</h2>
-						</div>
-					{:else}
-						<a class="button" href={$LL.link('/pakalpojumi')}>{$LL.buttons.hero()}</a>
-					{/if}
+					<a class="button" href={$LL.link('/pakalpojumi')}>{$LL.buttons.hero()}</a>
 				</div>
 			</div>
 			<div class="promo">
 				{#if promos.length > 0}
 					<div class="flex align image">
 						{#each [promos[index]] as promo}
-							<img src={promo.image.formats.medium?.url} alt="" />
+							<img src={promo.image.formats.medium?.url || promo.image.url} alt="" />
 						{/each}
 						<div class="flex collumn align justify controls">
-							<button class="flex" on:click={() => back()}><MdiChevronUp /></button>
+							<button aria-label={$LL.seo.slider.previous()} class="flex" on:click={() => back()}
+								><MdiChevronUp /></button
+							>
 							{#each promos as promo, i}
-								<button class:active={i === index} on:click={() => (index = i)} class="control" />
+								<button
+									aria-label={$LL.seo.slider.goTo()}
+									class:active={i === index}
+									on:click={() => (index = i)}
+									class="control"
+								/>
 							{/each}
-							<button class="flex" on:click={() => next()}><MdiChevronDown /></button>
+							<button aria-label={$LL.seo.slider.next()} class="flex" on:click={() => next()}
+								><MdiChevronDown /></button
+							>
 						</div>
 					</div>
+
+					<div class="promo_info flex align gap">
+						<p>{promos[index].text}</p>
+						<a
+							href={$LL.link(
+								`/${promos[index].service.category.slug}/${promos[index].service.slug}`
+							)}
+							class="round_button">→</a
+						>
+					</div>
 				{:else}
-					<img src="./images/falling-business-card-mockups.png" alt="business cards" />
+					<img src={homePage.image.formats.medium?.url} alt="business cards" />
 				{/if}
 			</div>
 		</div>
@@ -70,32 +78,23 @@
 </section>
 
 <style>
-	span {
-		font-weight: 300;
-	}
-	section::after {
-		content: '';
+	.promo_info {
+		display: flex;
+		align-items: center;
 		position: absolute;
-		top: calc(var(--size-xl) + var(--size-m));
-		right: 0;
-		border-top-left-radius: var(--size-m);
-		border-bottom-left-radius: var(--size-m);
 		bottom: var(--size-l);
-		background-color: var(--secondary);
-		width: 50%;
-		z-index: -99;
 	}
+	.promo_info > p {
+		font-size: 16px;
+		margin-bottom: 0;
+	}
+
 	.image {
 		height: 100%;
-		max-width: 100%;
 	}
 	.control.active {
 		background-color: var(--text);
 		scale: 1.1;
-	}
-	h2 {
-		line-height: 1.2;
-		margin: 0;
 	}
 	.control {
 		background-color: var(--primary);
@@ -105,9 +104,16 @@
 		border: 1px solid var(--text);
 		margin: var(--size-xs);
 	}
+	.round_button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 54px;
+		height: 54px;
+	}
 	.controls {
 		padding: var(--size-xs);
-		width: var(--size-l);
+		width: 50px;
 	}
 	.promo,
 	.text {
@@ -116,13 +122,14 @@
 		padding-top: calc(var(--size-xl) + var(--size-m));
 	}
 
-	.text {
-		padding-right: var(--size-xl);
+	.grid {
+		grid-template-columns: 0.7fr 1.3fr;
 	}
 	img {
 		height: 100%;
-		width: calc(100% - var(--size-l));
-		object-fit: cover;
+		width: 100%;
+		max-width: calc(100% - 50px);
+		object-fit: contain;
 		border-radius: var(--size-m);
 	}
 	section {
@@ -142,10 +149,45 @@
 	.container {
 		height: 100%;
 	}
-	.promo_info {
-		margin-top: auto;
-		height: auto;
-		position: absolute;
-		bottom: var(--size-l);
+	@media only screen and (max-width: 800px) {
+		.flex {
+			flex-direction: column;
+		}
+		.grid {
+			grid-template-columns: 1fr;
+		}
+		.text {
+			padding-bottom: var(--size-s);
+		}
+		.promo,
+		.text {
+			height: auto;
+		}
+		.promo {
+			padding: 0;
+			position: relative;
+		}
+		.promo_info {
+			flex-direction: row;
+		}
+		img {
+			padding-bottom: var(--size-xs);
+			max-width: 100%;
+		}
+		.controls {
+			position: absolute;
+			bottom: 0;
+			transform: rotate(90deg);
+		}
+		section {
+			height: auto;
+		}
+		.promo_info {
+			display: flex;
+			align-items: center;
+			position: relative;
+			bottom: 0;
+			margin-bottom: 100px;
+		}
 	}
 </style>
